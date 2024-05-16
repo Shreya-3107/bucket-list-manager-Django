@@ -58,11 +58,11 @@ class TaskList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs): #we are overriding already exisiting function here to set the context, which is a dictionary and we're giving the key as task and setting value by filtering out what the user has alone
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
-        context['count'] = context['tasks'].filter(is_complete=False)
+        context['count'] = context['tasks'].filter(is_complete=False).count()
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
-            context['tasks'] = context['tasks'].filter(title__startswith = search_input) #title__icontains
+            context['tasks'] = context['tasks'].filter(title__icontains = search_input) #title__icontains
         
         context['search_input'] = search_input
         #setting this will help us to make the default value of the search input to be the one the user previously typed. without this it keeps getting refreshed making it tough for the user to track. for this to work fully, we should add the variable search_input as the {{}} in the value field of input form
