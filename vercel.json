@@ -9,5 +9,6 @@
             "src": "/(.*)",
             "dest": "bucket_list/wsgi.py"
         }
-    ]
+    ],
+    "buildCommand": "./migrate.sh"
 }
